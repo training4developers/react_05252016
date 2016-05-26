@@ -16,10 +16,12 @@ class HelloWorld extends React.Component {
 		super(props);
 
 		this.state = {
+			items: props.items.concat(),
 			newItem: ''
 		};
 
 		this.onChange = this.onChange.bind(this);
+		this.addItem = this.addItem.bind(this);
 	}
 
 	onChange(e) {
@@ -28,13 +30,21 @@ class HelloWorld extends React.Component {
 		});
 	}
 
+	addItem() {
+
+		this.setState({
+			items: this.state.items.concat(this.state.newItem)
+		});
+
+	}
+
 	render() {
 		//return React.createElement('h1', null, 'Hello World!');
 		//return <h1>Hello World!</h1>;
 
 		const listItems = [];
 
-		this.props.items.forEach(function(item) {
+		this.state.items.forEach(function(item) {
 			listItems.push(<li key={item}>{item}</li>);
 		});
 
@@ -48,6 +58,7 @@ class HelloWorld extends React.Component {
 					New Item:
 					<input type='text' name='newItem' value={this.state.newItem} onChange={this.onChange} />
 				</label>
+				<button type='button' onClick={this.addItem}>Add Item</button>
 			</form>
 		</div>;
 	}
