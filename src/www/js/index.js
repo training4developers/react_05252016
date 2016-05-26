@@ -1,24 +1,21 @@
-var person = {
+var x=0, y=0, funcs=[];
 
-	firstName: 'Bob',
-	lastName: 'Martin',
-	address: {
-		country: 'India',
-		city: 'Ahmedabad',
-		state: 'Gujarat'
-	},
-	getFullName: function() {
-		return this.firstName + ' ' + this.lastName;
-	}
+for(; x<5; x++) {
+	// modify code between here
+	// cannot use y
+	// evaluate the console.log in the first loop
+	funcs.push(function() {
+		console.log(x);
+	});
+	// and here
+}
 
-};
+for(; y<5; y++) {
+	funcs[y]();
+}
 
-var propFirstName = 'firstName';
-
-person['this-is-cool'] = 23;
-console.log(person[propFirstName]);
-
-person[1] = 'test';
-
-//console.log(person.getFullName());
-console.dir(person);
+// 0
+// 1
+// 2
+// 3
+// 4
