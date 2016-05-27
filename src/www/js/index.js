@@ -1,54 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ItemForm from './components/item-form';
 
 const colors = ['red','gold','green','white','saffron','blue'];
 
-const ItemTable = props => <ul>
-	{props.items.map(item => <li key={item}>{item}</li>)}
-</ul>;
-
-class BaseComponent extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.onChange = this.onChange.bind(this);
-	}
-
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
-}
-
-class ItemForm extends BaseComponent {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			newItem: ''
-		};
-
-		this.childAddItem = this.childAddItem.bind(this);
-	}
-
-	childAddItem() {
-		this.props.addItem(this.state.newItem);
-	}
-
-	render() {
-		return <form>
-			<label>
-				New Item:
-				<input type='text' name='newItem' value={this.state.newItem} onChange={this.onChange} />
-			</label>
-			<button type='button' onClick={this.childAddItem}>Add Item</button>
-		</form>;
-	}
-}
-
-
+const ItemTable = props => <div>
+	<ul>
+		{props.items.map(item => <li key={item}>{item}</li>)}
+	</ul>
+	<button type='button' onClick={props.showAddItem}>Add Item</button>
+</div>;
 
 // function ItemTable(props) {
 // 	return React.createElement('ul', null, null);
@@ -71,6 +32,13 @@ class ItemTool extends React.Component {
 		};
 
 		this.addItem = this.addItem.bind(this);
+		this.showAddItem = this.showAddItem.bind(this);
+	}
+
+	showAddItem() {
+		this.setState({
+			view: 'form'
+		});
 	}
 
 
@@ -78,17 +46,28 @@ class ItemTool extends React.Component {
 	addItem(newItem) {
 
 		this.setState({
-			items: this.state.items.concat(newItem)
+			items: this.state.items.concat(newItem),
+			view: 'list'
 		});
 
 	}
 
 	render() {
 
+		let currentView = 'list';
+
+		switch(this.state.view) {
+			case 'form':
+				currentView = <ItemForm addItem={this.addItem} />;
+				break;
+			default:
+				currentView = <ItemTable items={this.state.items} showAddItem={this.showAddItem} />;
+				break;
+		}
+
 		return <div>
 			<h1>{this.props.title}</h1>
-			<ItemTable items={this.state.items} />
-			<ItemForm addItem={this.addItem} />
+			{currentView}
 		</div>;
 	}
 
