@@ -12,43 +12,19 @@
 	<body>
 		<div ng-app="MyApp">
 			<div ng-controller="MyCtrl">
-				Color Filter: <input ng-model="colorFilter">
-				<ul>
-					<li ng-repeat="color in colors | filter:colorFilter | orderBy:'toString()'">{{color}}</li>
-				</ul>
-				<form>
 
-					<div>
-						<label>New Color:
-							<input ng-model="newColor">
-						</label>
-					</div>
-					<button ng-click="addColor()">Add Color</button>
-				</form>
+				Show Me <input ng-model="showMe" type="checkbox">
 
+				<div ng-if="showMe">
+					You can see me!
+				</div>
 
-				<ul>
-					<li ng-repeat="car in cars | orderBy:'year'">{{car.make}} - {{car.model}} - {{car.year}}</li>
-				</ul>
 			</div>
 		</div>
 		<script>
 
 			angular.module("MyApp", [])
 				.controller("MyCtrl", function($scope) {
-
-					$scope.colors = ['saffron','white','green','red','blue','black','gold','brown'];
-
-					$scope.cars = [
-						{ id: 1, make: 'Audi', model: 'A6', year: 11, color: 'black' },
-						{ id: 2, make: 'BMW', model: 'X5', year: 10, color: 'black' },
-						{ id: 2, make: 'Porshe', model: 'Cayman', year: 9, color: 'white' }
-					];
-
-					$scope.addColor = function() {
-						$scope.colors.push($scope.newColor);
-					};
-
 
 
 				});

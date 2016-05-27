@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Introduction to JavaScript, React & Angular</title>
+		<link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+		<style>
+
+			div.ng-scope {
+				border:2px solid red;
+				padding:5px;
+				margin:5px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div ng-app="MyApp">
+			{{$id}}
+			{{message}}
+			<div ng-controller="MyCtrl">
+				{{$id}}
+			</div>
+			<div ng-controller="MyCtrl">
+				{{$id}}
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+				<div ng-controller="MyCtrl">
+					<div ng-controller="MyCtrl">
+						{{$id}}
+					</div>
+					<div ng-controller="MyCtrl">
+						{{$id}}
+						{{message}}
+					</div>
+				</div>
+			</div>
+			<div ng-controller="MyCtrl">
+				{{$id}}
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+			</div>
+			<div ng-controller="MyCtrl">
+				{{$id}}
+			</div>
+			<div ng-controller="MyCtrl">
+				{{$id}}
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+				<div ng-controller="MyCtrl">
+					{{$id}}
+				</div>
+			</div>
+			<div ng-controller="MyCtrl">
+				{{$id}}
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+
+				})
+				.run(function($rootScope) {
+
+					$rootScope.message = 'Hi Class!';
+
+				});
+
+		</script>
+	</body>
+
+</html>
