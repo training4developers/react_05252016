@@ -3,7 +3,58 @@ import ReactDOM from 'react-dom';
 
 const colors = ['red','gold','green','white','saffron','blue'];
 
-class HelloWorld extends React.Component {
+const ItemTable = props => <ul>
+	{props.items.map(item => <li key={item}>{item}</li>)}
+</ul>;
+
+class BaseComponent extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.onChange = this.onChange.bind(this);
+	}
+
+	onChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	}
+}
+
+class ItemForm extends BaseComponent {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			newItem: ''
+		};
+
+		this.childAddItem = this.childAddItem.bind(this);
+	}
+
+	childAddItem() {
+		this.props.addItem(this.state.newItem);
+	}
+
+	render() {
+		return <form>
+			<label>
+				New Item:
+				<input type='text' name='newItem' value={this.state.newItem} onChange={this.onChange} />
+			</label>
+			<button type='button' onClick={this.childAddItem}>Add Item</button>
+		</form>;
+	}
+}
+
+
+
+// function ItemTable(props) {
+// 	return React.createElement('ul', null, null);
+// }
+
+class ItemTool extends React.Component {
 
 	static get propTypes() {
 		return {
@@ -16,50 +67,28 @@ class HelloWorld extends React.Component {
 		super(props);
 
 		this.state = {
-			items: props.items.concat(),
-			newItem: ''
+			items: props.items.concat()
 		};
 
-		this.onChange = this.onChange.bind(this);
 		this.addItem = this.addItem.bind(this);
 	}
 
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
 
-	addItem() {
+
+	addItem(newItem) {
 
 		this.setState({
-			items: this.state.items.concat(this.state.newItem)
+			items: this.state.items.concat(newItem)
 		});
 
 	}
 
 	render() {
-		//return React.createElement('h1', null, 'Hello World!');
-		//return <h1>Hello World!</h1>;
-
-		const listItems = [];
-
-		this.state.items.forEach(function(item) {
-			listItems.push(<li key={item}>{item}</li>);
-		});
 
 		return <div>
 			<h1>{this.props.title}</h1>
-			<ul>
-				{listItems}
-			</ul>
-			<form>
-				<label>
-					New Item:
-					<input type='text' name='newItem' value={this.state.newItem} onChange={this.onChange} />
-				</label>
-				<button type='button' onClick={this.addItem}>Add Item</button>
-			</form>
+			<ItemTable items={this.state.items} />
+			<ItemForm addItem={this.addItem} />
 		</div>;
 	}
 
@@ -107,5 +136,5 @@ class WidgetTable extends React.Component {
 
 }
 
-ReactDOM.render(<HelloWorld items={colors} title='ADP Rocks!' />, document.querySelector('main'));
+ReactDOM.render(<ItemTool items={colors} title='ADP Items' />, document.querySelector('main'));
 //ReactDOM.render(<WidgetTable widgets={widgets} />, document.querySelector('main'));
